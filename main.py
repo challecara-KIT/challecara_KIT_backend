@@ -1,5 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from db.database import engine
+from db.model import Base
+from routers.main import router
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="challecara_backend"
@@ -18,3 +23,5 @@ app.add_middleware(
 @app.get('/')
 async def hello():
     return {"message": "Hello Challecara!"}
+
+app.include_router(router, prefix="/api/v1")
