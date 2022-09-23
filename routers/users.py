@@ -4,8 +4,8 @@ from fastapi.params import Depends
 from sqlalchemy.orm.session import Session
 from db.database import get_db
 from schemas.main import DeleteDetailModel
-from schemas.users import AuthInfo, SignInPayload, SignUpPayload, User as UserSchema
-from cruds.users import create_user, delete_user_by_id, get_user_by_id
+from schemas.users import AuthInfo, SignInPayload, SignUpPayload, UserClothes, User as UserSchema
+from cruds.users import create_user, delete_user_by_id, get_user_by_id, get_all_my_clothes
 from utils.utils import generate_token, get_current_user
 
 user_router = APIRouter()
@@ -37,3 +37,11 @@ async def delete_user(db: Session = Depends(get_db), user_id: str = Depends(get_
         raise HTTPException(status_code=403, detail="jwt_token is invarid!")
     delete_user_by_id(db, user_id)
     return {'detail': 'OK'}
+
+
+@user_router.get("/me/clothes",response_model=UserClothes)
+async def get_clothes(db: Session = Depends(get_db), user_id: str = Depends(get_current_user)):
+    if user_id is None:
+        raise HTTPException(status_code=403, detail="jwt_token is invalid")
+    user = get_all_my_clothes(db, user_id)
+    return user
