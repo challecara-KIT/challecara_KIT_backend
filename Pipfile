@@ -13,6 +13,7 @@ pydantic = {extras = ["email"], version = "*"}
 sqlalchemy-utils = "*"
 requests = "*"
 psycopg2 = "*"
+pytest = "*"
 
 [dev-packages]
 
