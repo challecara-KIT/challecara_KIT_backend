@@ -1,9 +1,12 @@
+from typing import List
 import bcrypt
 import os
 from fastapi import HTTPException
 from sqlalchemy.orm.session import Session
 from schemas.users import User as UserSchema
+from schemas.users import UserClothes
 from db.model import User
+
 
 salt = os.environ.get('PASSWORD_HASH_SALT',
                       '$2a$10$ThXfVCPWwXYx69U8vuxSUu').encode()
@@ -60,3 +63,11 @@ def delete_user_by_id(db: Session, user_id: str) -> None:
     db.delete(user_orm)
     db.commit()
     return
+
+
+def get_all_my_clothes(db: Session, user_id: str) -> UserClothes:
+    user_orm = db.query(User).filter(User.user_id == user_id).first()
+    if user_orm is None:
+        raise HTTPException(status_code=404, detail="user not found")
+    user = UserClothes.from_orm(user_orm)
+    return user
