@@ -29,7 +29,7 @@ def generate_token(db: Session, email: str, password: str) -> str:
     return encoded_jwt
 
 
-def decode_token(token: str) -> UserSchema:
+def decode_token(token: str) -> str:
     user_dict = jwt.decode(token, SECRET, algorithms=['HS256'])
     user_id = user_dict['user_id']
     return user_id
