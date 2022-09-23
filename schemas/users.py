@@ -1,5 +1,6 @@
+from typing import List
 from pydantic import BaseModel, EmailStr
-
+from schemas.clothes import Clothe
 
 class SignUpPayload(BaseModel):
     name: str
@@ -23,3 +24,12 @@ class User(BaseModel):
 
 class AuthInfo(BaseModel):
     jwt: str
+
+
+class UserClothes(BaseModel):
+    user_id: str
+    name: str
+    clothes: List[Clothe]
+
+    class Config:
+        orm_mode = True
