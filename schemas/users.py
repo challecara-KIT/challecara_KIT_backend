@@ -1,6 +1,6 @@
-from typing import List
 from pydantic import BaseModel, EmailStr
 from schemas.clothes import Clothe
+from schemas.fashions import Fashion
 
 class SignUpPayload(BaseModel):
     name: str
@@ -29,7 +29,8 @@ class AuthInfo(BaseModel):
 class UserClothes(BaseModel):
     user_id: str
     name: str
-    clothes: List[Clothe]
+    clothes: list[Clothe]
+    fashions: list[Fashion]
 
     class Config:
         orm_mode = True

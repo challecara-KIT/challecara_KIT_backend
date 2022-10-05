@@ -1,10 +1,11 @@
 from typing import Optional
 import jwt
-from fastapi import HTTPException, Header
+from fastapi import HTTPException, Security
+from fastapi.security import HTTPBearer
+from fastapi.security.http import HTTPAuthorizationCredentials
 from sqlalchemy.orm.session import Session
 from cruds.users import gen_password_hash, get_user_by_name
 from db.model import User
-from schemas.users import User as UserSchema
 from datetime import datetime, timedelta
 import os
 
@@ -35,13 +36,20 @@ def decode_token(token: str) -> str:
     return user_id
 
 
-def get_current_user(jwt_token: str = Header(None)) -> Optional[str]:
-    print('authorization: ', jwt_token)
-    if jwt_token.find("Bearer ") != 0:
-        raise HTTPException(status_code=400, detail="jwt_token is invarid")
+security = HTTPBearer()
+
+
+def get_current_user(credentials: HTTPAuthorizationCredentials = Security(security)) -> Optional[str]:
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
     try:
-        token = jwt_token.split(' ')[1]
-        user_id = decode_token(token)
-        return user_id
-    except:
-        return None
+        if credentials.scheme != 'Bearer':
+            raise credentials_exception
+
+        user_id = decode_token(credentials.credentials)
+    except Exception:
+        raise credentials_exception
+    return user_id
