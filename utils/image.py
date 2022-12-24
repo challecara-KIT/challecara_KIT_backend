@@ -2,6 +2,7 @@ import cloudinary
 import cloudinary.uploader
 import os
 import dotenv
+from fastapi import HTTPException
 
 def tagging_image(img_url: str):
     dotenv.load_dotenv()
@@ -22,7 +23,10 @@ def tagging_image(img_url: str):
     print(uploaddata["tags"][0])
     tag = uploaddata["tags"][0]
     result["type"] = tag
-    attributesdata = uploaddata["info"]["detection"]["object_detection"]['data']["cld-fashion"]["tags"][tag][0]["attributes"]
+    try:
+        attributesdata = uploaddata["info"]["detection"]["object_detection"]['data']["cld-fashion"]["tags"][tag][0]["attributes"]
+    except:
+        raise HTTPException(status_code=400, detail="Bat Image Request")
 
     if "sleeve length" in attributesdata:
         length = attributesdata["sleeve length"][0][0]
