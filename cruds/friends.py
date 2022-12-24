@@ -12,7 +12,7 @@ def create_friends_from_details(
     tag_color: str,
     user_id: str
 ) -> sf.Friend : 
-    same_friend = db.query(Friend).filter(Friend.name == name and Friend.user_id == user_id).first()
+    same_friend = db.query(Friend).filter(Friend.name == name ,Friend.user_id == user_id).first()
     if same_friend is None:
         friend_orm = Friend(
             name=name,

@@ -13,7 +13,7 @@ def get_my_all_fashion(db: Session, user_id: str) -> list[FashionSchema]:
     return fashion
 
 def create_fashion(db: Session, user_id: str, clothe_ids: list[str], name:str, date: datetime) -> FashionSchema:
-    same_fashion = db.query(Fashion).filter(Fashion.name == name and Fashion.user_id == user_id).first()
+    same_fashion = db.query(Fashion).filter(Fashion.name == name ,Fashion.user_id == user_id).first()
     if same_fashion is None:
         fashion_orm = Fashion(
             user_id=user_id,
