@@ -49,7 +49,7 @@ def update_friend_from_details(
     date_id: Optional[str] = None
 ) -> sf.Friend:
     friend_orm = db.query(Friend).filter(Friend.friend_id == friend_id).first()
-    if friend is None:
+    if friend_orm is None:
         raise HTTPException(status_code=404, detail="friend not found!!")
     friend_orm.name = name
     friend_orm.tag_color = tag_color
