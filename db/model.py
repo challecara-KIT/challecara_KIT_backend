@@ -41,7 +41,7 @@ class Clothe(Base):
 class Fashion(Base):
     __tablename__ = "fashions"
     fashion_id = Column(String, primary_key=True, default=generate_uuid)
-    name = Column(String,unique=True)
+    name = Column(String)
     user_id = Column(String, ForeignKey("users.user_id"))
     clothes = relationship("Clothe", secondary=Fashion_Clothes.__tablename__)
     date = relationship("FashionDate",cascade="all, delete")
@@ -57,7 +57,7 @@ class FashionDate(Base):
 class Friend(Base):
     __tablename__ = "friends"
     friend_id = Column(String, primary_key=True, default=generate_uuid)
-    name = Column(String, nullable=False, unique=True)
+    name = Column(String, nullable=False)
     tag_color = Column(String, nullable=False)
     user_id = Column(String, ForeignKey("users.user_id"))
     user = relationship("User")
