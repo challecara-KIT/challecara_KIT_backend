@@ -7,7 +7,7 @@ from routers.main import router
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="challecara_backend"
+    title="ひまじんのたまり場"
 )
 
 
