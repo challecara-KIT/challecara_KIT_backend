@@ -32,6 +32,8 @@ class Clothe(Base):
     image_url = Column(String, nullable=False)
     size = Column(String, nullable=False)
     color = Column(String, nullable=False)
+    type = Column(String)
+    season = Column(String)
     user_id = Column(String, ForeignKey("users.user_id"))
     fashions = relationship("Fashion", secondary=Fashion_Clothes.__tablename__)
     

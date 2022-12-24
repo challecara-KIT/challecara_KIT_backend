@@ -9,11 +9,15 @@ def create_clothe_by_payload(
     user_id: str, 
     image_url:str,
     size: str,
+    type: str,
+    season: str,
     color: str,
 ) -> ClotheSchema:
     clothe_orm = Clothe(
         image_url=image_url,
         size=size,
+        type=type,
+        season=season,
         color=color,
         user_id=user_id,
     )

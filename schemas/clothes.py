@@ -8,10 +8,18 @@ class SizeType(str, Enum):
     l = "L"
     ll = "LL"
 
+class Season(str, Enum):
+    spring = "spring"
+    summer = "summer"
+    fall = "fall"
+    winter = "winter"
+
 class Clothe(BaseModel):
     clothe_id: str
     image_url: str
     size: str
+    season: str
+    type: str
     color: str
     user_id: str
 
