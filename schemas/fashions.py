@@ -22,5 +22,6 @@ class Fashion(BaseModel):
     
 class FashionPayload(BaseModel):
     clothe_ids: list[str]
+    date: datetime
     
 
